@@ -1,0 +1,27 @@
+{
+  "name": "avatardownloader",
+  "version": "1.0.0",
+  "description": "GitHub Avatar Downloader",
+  "main": "download_avatars.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benji-Leboe/avatarDownloader.git"
+  },
+  "keywords": [
+    "GitHub",
+    "avatar",
+    "downloader"
+  ],
+  "author": "Benji Leboe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Benji-Leboe/avatarDownloader/issues"
+  },
+  "homepage": "https://github.com/Benji-Leboe/avatarDownloader#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
