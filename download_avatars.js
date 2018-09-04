@@ -47,6 +47,7 @@ function getRepoContributors(url, cb){
   };
 
   request(options, (err, res, body) => {
+    //check for valid owner/repo
     if(body.includes("Not Found")){
       console.error('Owner or repo not found.');
     }else{
@@ -81,10 +82,13 @@ function downloadImgByURL(url, userName, filePath){
 //check for passed args
 if(process.argv.slice(2).length < 2 || process.argv.slice(2).length > 3){
   console.error('Please pass an <owner> and <repo> argument as well as an optional <directory> argument. If you don\'t pass a <directory> argument, images will be downloaded to ./avatars');
+//check if .env exists
 }else if(!fs.existsSync('.env')){
-  console.error('Missing .env file.')
+  console.error('Missing .env file.');
+//check for token
 }else if(!credentials.hasOwnProperty('token')){
-  console.error('Please add an authentication token to credentials.')
+  console.error('Please add an authentication token to credentials.');
+//else run program
 }else{
   githubAvatarDownloader(getURL, destination);
 }
