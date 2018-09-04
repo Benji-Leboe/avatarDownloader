@@ -5,10 +5,7 @@ const mkdirp = require('mkdirp');
 
 //authentication credentials
 const credentials = {
-  username: process.env.GIT_USER,
-  token: process.env.GIT_TOKEN,
-  client_id: process.env.CLIENT_ID,
-  client_secret: process.env.CLIENT_SECRET
+  token: process.env.GIT_TOKEN
 }
 
 //define source URL
@@ -36,6 +33,7 @@ function githubAvatarDownloader(url, path){
       downloadImgByURL(item.avatar_url, item.login, path);
     });
   });
+  
 }
 
 //find repo contributors
@@ -49,7 +47,11 @@ function getRepoContributors(url, cb){
   };
 
   request(options, (err, res, body) => {
-    cb(err, body);
+    if(body.includes("Not Found")){
+      console.error('Owner or repo not found.');
+    }else{
+      cb(err, body);
+    }
   });
 };
 
@@ -77,8 +79,12 @@ function downloadImgByURL(url, userName, filePath){
 }
 
 //check for passed args
-if(process.argv.slice(2).length < 2){
+if(process.argv.slice(2).length < 2 || process.argv.slice(2).length > 3){
   console.error('Please pass an <owner> and <repo> argument as well as an optional <directory> argument. If you don\'t pass a <directory> argument, images will be downloaded to ./avatars');
+}else if(!fs.existsSync('.env')){
+  console.error('Missing .env file.')
+}else if(!credentials.hasOwnProperty('token')){
+  console.error('Please add an authentication token to credentials.')
 }else{
   githubAvatarDownloader(getURL, destination);
 }
