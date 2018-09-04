@@ -13,21 +13,6 @@ const credentials = {
   client_secret: process.env.CLIENT_SECRET
 }
 
-//scopes object for auth
-let scopes = {
-  'scopes': ['user', 'repo', 'gist'],
-  'note': 'admin script'
-}
-
-//user authentication
-github.auth.config({
-  username: credentials.username,
-  password: credentials.password
-}).login(scopes, (err, id, token, headers) => {
-  console.log(id, token);
-});
-
-
 //define source URL
 const url = 'https://api.github.com';
 //get args from node
@@ -63,4 +48,28 @@ function githubAvatarDownloader(url, path){
     })
 }
 
-githubAvatarDownloader(url, path);
+function getRepoContributors(repoOwner, repoName, cb){
+  let options = {
+    url: `https://api.github.com/repos/${repoOwner}/${repoName}/contributors`,
+    headers: {
+      'User-Agent': 'request',
+      'Authorization': `token ${credentials.token}`
+    }
+  };
+
+  request(options, (err, res, body) => {
+    cb(err, body);
+  });
+};
+
+getRepoContributors("jquery", "jquery", (err, result) => {
+  console.log(`Errors: ${err}`);
+  let results = JSON.parse(result);
+  results.forEach((item) => {
+    console.log(item.avatar_url);
+  });
+});
+
+
+
+// githubAvatarDownloader(url, path);
