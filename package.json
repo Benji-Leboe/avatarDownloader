@@ -24,7 +24,6 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "mkdirp": "^0.5.1",
-    "octonode": "^0.9.3",
     "request": "^2.88.0"
   }
 }
