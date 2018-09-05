@@ -64,7 +64,7 @@ function downloadImgByURL(url, userName, filePath){
       console.error(err);
     })
     .on('response', (response) => {
-      console.log(`Response code for ${username}: ${response.statusCode}\nResponse message: ${response.statusMessage}\nContent type: ${response.headers['content-type']}`);
+      console.log(`Response code for ${userName}: ${response.statusCode}\nResponse message: ${response.statusMessage}\nContent type: ${response.headers['content-type']}`);
       if(response.statusCode >= 400){
         console.log('Download failed.');
       }else{
